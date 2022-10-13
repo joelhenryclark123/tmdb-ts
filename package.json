@@ -1,5 +1,5 @@
 {
-  "name": "tmdb-ts",
+  "name": "@joelhc/tmdb-ts",
   "version": "0.0.10",
   "description": "TMDB v3 library wrapper",
   "main": "dist/index.js",
