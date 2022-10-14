@@ -25,8 +25,6 @@ export interface DiscoverRequest {
   sort_by?: DiscoverSortOption;
   page?: number;
   with_watch_providers?: string[];
-  watch_region?: string;
-  with_watch_monetization_types?: string[];
 }
 
 export interface MoviesDiscoverResponse {
@@ -38,16 +36,9 @@ export class DiscoverEndpoint extends BaseEndpoint {
     super(accessToken);
   }
 
-  async movies({
-    language,
-    region,
-    sort_by,
-    page,
-    watch_region,
-    with_watch_providers,
-    with_watch_monetization_types,
-  }: DiscoverRequest): Promise<MoviesDiscoverResponse> {
-    const params = querystring.encode({ language, region, sort_by: sort_by?.valueOf(), page, watch_region, with_watch_providers: with_watch_providers?.join('|'), with_watch_monetization_types });
+  async movies(providerIds: string[], watch_region = 'US', page = 1, with_watch_monetization_type = 'flatrate'): Promise<MoviesDiscoverResponse> {
+    const params = querystring.encode({ watch_region, page, with_watch_providers: providerIds.join('|'), with_watch_monetization_type });
+
     return await this.api.get<MoviesDiscoverResponse>(
       `/discover/movie?${params}`,
     );
