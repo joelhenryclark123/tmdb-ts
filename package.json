@@ -1,6 +1,6 @@
 {
   "name": "@joelhc/tmdb-ts",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "description": "TMDB v3 library wrapper",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,14 +10,6 @@
     "lint:fix": "eslint --ext .ts src/ --fix",
     "prepublish": "tsc",
     "copy-types": "mkdir dist/types && cp src/types/*.d.ts dist/types"
-  },
-  "bugs": {
-    "url": "https://github.com/blakejoy/tmdb-ts/issues",
-    "email": "blake@bjoynes.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/blakejoy/tmdb-ts.git"
   },
   "keywords": [
     "tmdb",
