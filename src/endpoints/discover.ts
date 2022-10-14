@@ -36,8 +36,10 @@ export class DiscoverEndpoint extends BaseEndpoint {
     super(accessToken);
   }
 
-  async movies(providerIds: string[], watch_region = 'US', page = 1, with_watch_monetization_type = 'flatrate'): Promise<MoviesDiscoverResponse> {
-    const params = querystring.encode({ watch_region, page, with_watch_providers: providerIds.join('|'), with_watch_monetization_type });
+  async movies(providerIds: string[] | string, watch_region = 'US', page = 1, with_watch_monetization_type = 'flatrate'): Promise<MoviesDiscoverResponse> {
+    const with_watch_providers = Array.isArray(providerIds) ? providerIds.join('|') : [providerIds];
+
+    const params = querystring.encode({ watch_region, page, with_watch_providers, with_watch_monetization_type });
 
     return await this.api.get<MoviesDiscoverResponse>(
       `/discover/movie?${params}`,
