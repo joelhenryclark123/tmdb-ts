@@ -51,8 +51,6 @@ export interface Collection {
 
 export interface Movie {
   id: number;
-  logo_path: string;
-  name: string;
   poster_path: string;
   adult: boolean;
   overview: string;
