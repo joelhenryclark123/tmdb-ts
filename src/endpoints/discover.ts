@@ -1,6 +1,7 @@
 import { BaseEndpoint } from './base';
 import querystring from 'querystring';
 import { CertificationEndpoint } from './certification';
+import { Movie, Search } from '../types';
 
 export enum DiscoverSortOption {
   popularityAsc = 'popularity.asc',
@@ -28,7 +29,7 @@ export interface DiscoverRequest {
 }
 
 export interface MoviesDiscoverResponse {
-  results: string;
+  results: Search<Movie>
 }
 
 export class DiscoverEndpoint extends BaseEndpoint {
