@@ -1,6 +1,6 @@
 {
   "name": "@joelhc/tmdb-ts",
-  "version": "0.0.16",
+  "version": "0.0.18",
   "description": "TMDB v3 library wrapper",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,7 @@
     "compile": "rm -rf dist && tsc -d && npm run copy-types",
     "lint": "eslint --ext .ts src/",
     "lint:fix": "eslint --ext .ts src/ --fix",
-    "prepublish": "tsc",
+    "prepublish": "npm run compile",
     "copy-types": "mkdir dist/types && cp src/types/*.d.ts dist/types"
   },
   "keywords": [
