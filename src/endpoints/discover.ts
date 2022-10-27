@@ -1,31 +1,27 @@
 import { BaseEndpoint } from './base';
 import querystring from 'querystring';
-import { CertificationEndpoint } from './certification';
 import { Movie, Search } from '../types';
-
-export enum DiscoverSortOption {
-  popularityAsc = 'popularity.asc',
-  popularityDesc = 'popularity.desc',
-  releaseDateAsc = 'release_date.asc',
-  releaseDateDesc = 'release_date.desc',
-  revenueAsc = 'revenue.asc',
-  revenueDesc = 'revenue.desc',
-  primaryReleaseDateAsc = 'primary_release_date.asc',
-  primaryReleaseDateDesc = 'primary_release_date.desc',
-  originalTitleAsc = 'original_title.asc',
-  originalTitleDesc = 'original_title.desc',
-  voteAverageAsc = 'vote_average.asc',
-  voteAverageDesc = 'vote_average.desc',
-  voteCountAsc = 'vote_count.asc',
-  voteCountDesc = 'vote_count.desc',
-}
 
 export interface DiscoverRequest {
   language?: string;
   region?: string;
-  sort_by?: DiscoverSortOption;
+  sort_by?: 'popularity.asc' |
+  'popularity.desc' |
+  'release_date.asc' |
+  'release_date.desc' |
+  'revenue.asc' |
+  'revenue.desc' |
+  'primary_release_date.asc' |
+  'primary_release_date.desc' |
+  'original_title.asc' |
+  'original_title.desc' |
+  'vote_average.asc' |
+  'vote_average.desc' |
+  'vote_count.asc' |
+  'vote_count.desc';
   page?: number;
-  with_watch_providers?: string[];
+  providerIds: string[] | string;
+  watch_region?: string
 }
 
 export class DiscoverEndpoint extends BaseEndpoint {
@@ -33,10 +29,16 @@ export class DiscoverEndpoint extends BaseEndpoint {
     super(accessToken);
   }
 
-  async movies(providerIds: string[] | string, watch_region = 'US', page = 1, with_watch_monetization_type = 'flatrate'): Promise<Search<Movie>> {
+  async movies({ providerIds, watch_region, page, sort_by }: DiscoverRequest): Promise<Search<Movie>> {
     const with_watch_providers = Array.isArray(providerIds) ? providerIds.join('|') : [providerIds];
 
-    const params = querystring.encode({ watch_region, page, with_watch_providers, with_watch_monetization_type });
+    const params = querystring.encode({
+      sort_by: sort_by ?? 'popularity.desc',
+      watch_region: watch_region ?? 'US',
+      page: page ?? 1,
+      with_watch_providers,
+      with_watch_monetization_type: 'flatrate',
+    });
 
     return await this.api.get<Search<Movie>>(
       `/discover/movie?${params}`,
