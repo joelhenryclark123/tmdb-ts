@@ -58,6 +58,7 @@ export interface Movie {
   genre_ids: number[];
   original_title: string;
   original_language: string;
+  backdrop_path: string;
   title: string;
   popularity: number;
   vote_count: number;
